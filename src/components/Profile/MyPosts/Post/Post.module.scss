@@ -1,0 +1,12 @@
+.newPost{
+	margin: 30px 0;
+	display: flex;
+	& img{
+		width: 100px;
+		border-radius: 50%;
+	}
+	&__text{
+		color: purple;
+		align-self: center;
+	}
+}

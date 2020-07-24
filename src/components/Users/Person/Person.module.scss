@@ -1,0 +1,44 @@
+.listItem{
+	display: flex;
+	margin: 25px 15px;
+	&__photo{
+		justify-content: center;
+		display: flex;
+		flex-direction: column;
+	}
+	&__photo img{
+		width: 80px;
+		margin: 15px 15px;
+	}
+	&__follow{
+		margin: 15px 15px;
+		height: 20px;
+	}
+	&__info{
+		border: 1px solid grey;
+		display: flex;
+		border-radius: 7px;
+		min-width: 500px;
+	}
+	&__bio{
+		flex: 1 1;
+		margin: 15px 15px;
+		display: flex;
+		flex-direction: column;
+		height: 100px;
+	}
+	&__name{
+		flex: 1 1;
+	}
+	&__status{
+	
+	}
+	&__location{
+		margin: 15px 15px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+	}
+	&__country{}
+	&__city{}
+}

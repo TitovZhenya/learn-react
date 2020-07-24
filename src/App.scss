@@ -1,0 +1,14 @@
+.Wrapper{
+	max-width: 1240px;
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: 3fr 10fr;
+	grid-template-rows: 60px 1fr;
+	grid-gap: 10px;
+}
+
+.content{
+	grid-row: 2;
+	grid-column: 2;
+	background-color: #959da5;
+}

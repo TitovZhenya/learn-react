@@ -1,0 +1,9 @@
+.post{
+	margin: 20px 40px;
+	&__add{
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+}

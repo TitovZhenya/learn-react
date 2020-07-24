@@ -1,0 +1,27 @@
+.content{
+	&__dialogs{
+		color: white;
+		display: grid;
+		grid-template-columns: 2fr 8fr;
+	}
+}
+
+.companion{
+	justify-self: center;
+	padding: 30px;
+}
+
+.chat{
+	padding: 30px;
+	&__addMessage{
+		display: grid;
+		grid-template-columns: minmax(150px, 400px);
+	}
+	&__area{}
+	&__sendBtn{
+		width: 75px;
+		height: 25px;
+		margin: 20px 0;
+		justify-self: end;
+	}
+}

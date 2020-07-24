@@ -1,0 +1,21 @@
+.companion{
+	&__body{
+		margin: 15px 0;
+	}
+	&__body a{
+		text-decoration: none;
+		color: #2a628f;
+		display: flex;
+	}
+	&__body .active{
+	  	color: #d59d70;
+	}
+	&__photo{
+		width: 40px;
+		border-radius: 50%;
+	}
+	&__name{
+		margin-left: 15px;
+		align-self: center;
+	}
+}

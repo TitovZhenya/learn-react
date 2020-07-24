@@ -1,0 +1,22 @@
+.users{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	&__header{
+		font-size: 20px;
+		margin: 20px 0;
+	}
+	&__list{}
+	&__page{
+		margin: 0 5px;
+	}
+	&__page_active{
+		font-weight: bold;
+	}
+	&__loading{
+		display: block;
+	}
+	&__complete{
+		display: none;
+	}
+}

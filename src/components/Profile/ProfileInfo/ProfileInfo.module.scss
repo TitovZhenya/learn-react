@@ -1,0 +1,16 @@
+.content{
+	&__banner img{
+		width: 100%;
+	}
+}
+
+.user{
+	display: flex;
+	margin: 40px;
+	&__photo img{ 
+		width: 200px 
+	}
+	&__info{
+		margin: 0 20px;
+	}
+}

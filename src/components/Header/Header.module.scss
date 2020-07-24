@@ -1,0 +1,20 @@
+.header{
+  grid-row: 1 / 1;
+  grid-column: 1 / -1;
+  background-color: #01244a;
+  align-self: center;
+  display: flex;
+  &__logo{
+  	flex: 1 1;
+  }
+  &__logo img{
+  	width: 50px;
+  }
+  &__login{
+  	margin-right: 20px;
+  	color: #FFF;
+  }
+  &__login a{
+  	color: #FFF;
+  }
+}
