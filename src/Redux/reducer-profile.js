@@ -1,7 +1,6 @@
 import {usersAPI, profileAPI} from '../API/api';
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_POST = 'UPDATE-POST';
 const SET_PROFILE = 'SET_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 
@@ -10,7 +9,6 @@ let initiallState = {
                     {id : 1, text : "Hi, it's my first React project", likeCount : 13},
                     {id : 2, text : "Good Luck", likeCount : 5}
                 ],
-            newPost : '',
             profile : null,
             status : ''
         };
@@ -20,13 +18,7 @@ const profileReducer = (state = initiallState, action) => {
 		case ADD_POST:
             return {
                 ...state,
-                posts : [...state.posts, {id : 3, text : state.newPost, likeCount : 0}],
-                newPost : ''
-            }
-        case UPDATE_POST:
-            return {
-                ...state,
-                newPost : action.text
+                posts : [...state.posts, {id : 3, text : action.text, likeCount : 13}],
             }
         case SET_PROFILE:
             return {
@@ -43,8 +35,7 @@ const profileReducer = (state = initiallState, action) => {
 	}
 }
 
-export const addPostActionCreator = () => ({type : ADD_POST});
-export const updatePostActionCreator = (text) => ({type : UPDATE_POST, text});
+export const addPost = (text) => ({type : ADD_POST, text});
 export const setProfile = (profile) => ({type : SET_PROFILE, profile});
 export const setStatus = (status) => ({type : SET_STATUS, status});
 
