@@ -1,0 +1,12 @@
+.newPost{
+	&__text{}
+	&__error{
+		border: 1px solid red;
+		color: red;
+	}
+	&__defaultError{
+		display: inline-block;
+		border: 1px solid red;
+		color: red;
+	}
+}

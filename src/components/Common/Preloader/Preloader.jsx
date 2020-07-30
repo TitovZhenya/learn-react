@@ -16,7 +16,3 @@ const Preloader = (props) => {
 } 
 
 export default Preloader;
-
-{/*<div className={props.isFetching ? style.users__loading : style.users__complete}>
-	<img src={preloaderImg} alt=""/>
-</div>*/}

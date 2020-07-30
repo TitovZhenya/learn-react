@@ -2,6 +2,7 @@ import React from 'react';
 import style from './ProfileInfo.module.scss';
 import Preloader from '../../Common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus';
+import ProfilePhoto from '../../../img/images.png';
 
 const Profile = (props) => {
   if (!props.profile){
@@ -15,7 +16,7 @@ const Profile = (props) => {
 
       <div className={style.user}>
         <div className={style.user__photo}>
-          <img src={props.profile.photos.large} alt=""/>
+          <img src={props.profile.photos ? props.profile.photos.large : ProfilePhoto } alt=""/>
         </div>
 
         <div className={style.user__info}>

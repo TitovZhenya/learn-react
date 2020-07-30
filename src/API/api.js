@@ -51,7 +51,7 @@ export const profileAPI = {
 				'API-KEY' : '1d26d38d-02ca-4434-bb85-10cf30808e34',
 			},
 
-		}).then ( response => response.json());
+		}).then( response => response.json() );
 	}
 }
 
@@ -61,5 +61,29 @@ export const authAPI = {
 			method : 'GET',
 			credentials : 'include'
 		}).then( response => response.json() )
+	},
+	login(email, password, rememberMe = false){
+		let sp = new URLSearchParams();
+		sp.append('email', email);
+		sp.append('password', password);
+		sp.append('rememberMe', rememberMe);
+
+		return fetch(`${baseURL}auth/login`,{
+			method : 'POST',
+			credentials : 'include',
+			body : sp,
+			headers : {
+				'API-KEY' : '1d26d38d-02ca-4434-bb85-10cf30808e34'
+			}
+		}).then( response => response.json() );
+	},
+	logout(){
+		return fetch(`${baseURL}/auth/login`, {
+			method : 'DELETE',
+			credentials : 'include',
+			headers : {
+				'API-KEY' : '1d26d38d-02ca-4434-bb85-10cf30808e34'
+			}
+		}).then( response => response.json() );
 	}
 }

@@ -2,27 +2,12 @@ import React from 'react';
 import style from './Users.module.scss';
 import Person from './Person/Person';
 import Preloader from '../Common/Preloader/Preloader';
+import Paginator from '../Common/Paginator/Paginator';
 
 const Users = (props) => {
-
-	let usersPagesCount = Math.ceil(100 / props.usersOnPage);
-	let pagesArr = [];
-
-	for ( let i = 1; i <= usersPagesCount; i++ ){
-		pagesArr.push(i);
-	}
-
-	const onSwitchPage = (page) => {
-		props.setCurrentPage(page);
-		props.onPageChanged(page);
-	}
-
 	return (
 		<div className={style.users}>
-			<div className={style.users__header}>
-				{pagesArr.map( (page, i) => <span key={i} onClick={ () => onSwitchPage(page)} 
-					className={`${props.currentUsersPage === page ? style.users__page_active : undefined} ${style.users__page}`}>{page}</span> )}
-			</div>
+			<Paginator usersOnPage={props.usersOnPage} onPageChanged={props.onPageChanged} currentUsersPage={props.currentUsersPage}/>
 			
 			<Preloader isFetching={props.isFetching} />
 			
