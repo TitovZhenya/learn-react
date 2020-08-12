@@ -1,5 +1,5 @@
 import React from 'react';
-import {reduxForm, Field} from 'redux-form';
+import {reduxForm} from 'redux-form';
 import {maxLengthCreator, requiredField} from '../../utils/validators/validators';
 import {FormsControls} from '../Common/FormsControls/FormsControls';
 import {Redirect} from 'react-router-dom';

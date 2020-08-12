@@ -7,10 +7,11 @@ import Paginator from '../Common/Paginator/Paginator';
 const Users = (props) => {
 	return (
 		<div className={style.users}>
-			<Paginator usersOnPage={props.usersOnPage} onPageChanged={props.onPageChanged} currentUsersPage={props.currentUsersPage}/>
+            <Paginator totalItemsCount={props.usersCount} usersOnPage={props.usersOnPage} onPageChanged={props.onPageChanged} 
+            currentUsersPage={props.currentUsersPage}/>
 			
-			<Preloader isFetching={props.isFetching} />
-			
+			{props.isFetching && <Preloader />}
+
 			<div className={style.users__list}>
 				{props.users.map( (person, index) => <Person key={index} userName={person.name} 
 				status={person.status} followed={person.followed} location={person.location} id={person.id} 

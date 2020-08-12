@@ -3,10 +3,11 @@ import style from './Profile.module.scss';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo.jsx';
 
-const Profile = (props) => {
+const Profile = ({profile, status, updateStatus, userId, isAuth, owner, savePhoto}) => {
 	return(
 		<div>
-			<ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus} userId={props.userId} isAuth={props.isAuth} />
+            <ProfileInfo profile={profile} status={status} updateStatus={updateStatus} 
+            userId={userId} isAuth={isAuth} owner={owner} savePhoto={savePhoto}/>
 			<MyPostsContainer />
 		</div>
 		);

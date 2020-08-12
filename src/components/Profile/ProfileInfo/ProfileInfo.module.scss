@@ -1,16 +1,27 @@
-.content{
-	&__banner img{
-		width: 100%;
-	}
+.content {
+    &__banner img {
+        width: 100%;
+    }
 }
 
-.user{
-	display: flex;
-	margin: 40px;
-	&__photo img{ 
-		width: 200px 
-	}
-	&__info{
-		margin: 0 20px;
-	}
+.user {
+    display: flex;
+    margin: 40px;
+    &__photo {
+        display: flex;
+        flex-direction: column;
+    }
+    &__photo img {
+        margin: 15px 0;
+        width: 200px;
+    }
+    &__status{
+        margin: 15px 0;
+    }
+    &__contacts{
+        margin-left: 15px;
+    }
+    &__data{
+        margin: 0 15px;
+    }
 }
