@@ -52,7 +52,7 @@ export const profileAPI = {
             }
         }).then(response => response.json());
     },
-    savePhoto(photo) { 
+    savePhoto(photo) {
         let fd = new FormData();
         fd.append('image', photo);
         return fetch(`${baseURL}profile/photo`, {
@@ -61,8 +61,19 @@ export const profileAPI = {
             body: fd,
             headers: {
                 'API-KEY': '1d26d38d-02ca-4434-bb85-10cf30808e34',
-            } 
-        }).then( response => response.json());
+            }
+        }).then(response => response.json());
+    },
+    updateProfile(profileData) {
+        return fetch(`${baseURL}profile`, {
+            method: 'PUT',
+            credentials: 'include',
+            body: JSON.stringify(profileData),
+            headers: {
+                'API-KEY': '1d26d38d-02ca-4434-bb85-10cf30808e34',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json());
     }
 }
 
@@ -71,13 +82,14 @@ export const authAPI = {
         return fetch(`${baseURL}auth/me`, {
             method: 'GET',
             credentials: 'include'
-        }).then(response => response.json())
+        }).then(response => response.json());
     },
-    login(email, password, rememberMe = false) {
+    login(email, password, rememberMe = false, captcha = '') {
         let sp = new URLSearchParams();
         sp.append('email', email);
         sp.append('password', password);
         sp.append('rememberMe', rememberMe);
+        sp.append('captcha', captcha);
 
         return fetch(`${baseURL}auth/login`, {
             method: 'POST',
@@ -95,6 +107,15 @@ export const authAPI = {
             headers: {
                 'API-KEY': '1d26d38d-02ca-4434-bb85-10cf30808e34'
             }
+        }).then(response => response.json());
+    }
+}
+
+export const securityAPI = {
+    getCaptcha() {
+        return fetch(`${baseURL}security/get-captcha-url`, {
+            method: 'GET',
+            credentials: 'include'
         }).then(response => response.json());
     }
 }

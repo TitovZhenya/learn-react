@@ -1,9 +1,10 @@
-import { usersAPI, profileAPI } from '../API/api';
+import { profileAPI } from '../API/api';
+import { stopSubmit } from 'redux-form';
 
 const ADD_POST = 'reducer-profile/ADD-POST';
 const SET_PROFILE = 'reducer-profile/SET_PROFILE';
 const SET_STATUS = 'reducer-profile/SET_STATUS';
-const SAVE_PHOTO_SUCCESS = 'reducer-profile/SAVE_PHOTO_SUCCESS'
+const SAVE_PHOTO_SUCCESS = 'reducer-profile/SAVE_PHOTO_SUCCESS';
 
 let initiallState = {
     posts: [
@@ -74,6 +75,21 @@ export const savePhoto = photo => {
         const response = await profileAPI.savePhoto(photo);
         if (response.resultCode === 0)
             dispatch(savePhotoSuccess(response.data.photos))
+    }
+}
+
+export const saveProfile = profileData => async (dispatch, getState) => {
+    try {
+        const userId = getState().auth.id;
+        const response = await profileAPI.updateProfile(profileData);
+        if (response.resultCode === 0)
+            dispatch(getProfile(userId));
+        else {
+            dispatch(stopSubmit('edit-profile', { _error: response.messages[0] }));
+            return Promise.reject(response.messages[0]);
+        }
+    } catch (error) {
+        console.log(error);
     }
 }
 

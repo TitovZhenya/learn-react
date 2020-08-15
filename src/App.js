@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import HeaderContainer from './components/Header/HeaderContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -35,6 +35,7 @@ class App extends React.Component {
                 <div className="content">
                     <React.Suspense fallback={ <Preloader /> } >
                         <Switch>
+                            <Route exact path='/' render={ () => <Redirect to='/Profile'/>} />
                             <Route path='/Profile/:userId?' render={() => <ProfileContainer />} />
                             <Route path='/Dialogs' render={() => <DialogsContainer />} />
                             <Route path='/Login' render={() => <LoginContainer />} />
@@ -42,6 +43,7 @@ class App extends React.Component {
                             <Route path='/Music' component={Music} />
                             <Route path='/Settings' component={Settings} />
                             <Route path='/Users' component={UsersContainer} />
+                            <Route path='*' render={() => <div>404</div>} />
                         </Switch>
                     </React.Suspense>
                 </div>
