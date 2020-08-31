@@ -25,14 +25,6 @@ const Person = (props) => {
                         {props.status}
                     </div>
                 </div>
-                <div className={style.listItem__location}>
-                    <div className={style.listItem__country}>
-                        {'props.location.country'}
-                    </div>
-                    <div className={style.listItem__city}>
-                        {'props.location.city'}
-                    </div>
-                </div>
             </div>
         </div>
     )

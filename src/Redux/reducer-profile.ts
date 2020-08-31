@@ -1,5 +1,7 @@
 import { profileAPI } from '../API/api';
 import { stopSubmit } from 'redux-form';
+import { AppThunk } from './redux-store'
+import { TPost, TProfile, TPhoto } from '../types/types';
 
 const ADD_POST = 'reducer-profile/ADD-POST';
 const SET_PROFILE = 'reducer-profile/SET_PROFILE';
@@ -10,12 +12,14 @@ let initiallState = {
     posts: [
         { id: 1, text: "Hi, it's my first React project", likeCount: 13 },
         { id: 2, text: "Good Luck", likeCount: 5 }
-    ],
-    profile: null,
-    status: ''
+    ] as Array<TPost>,
+    profile: null as null | TProfile,
+    status: '' as string
 };
 
-const profileReducer = (state = initiallState, action) => {
+type TInitiallState = typeof initiallState
+
+const profileReducer = (state = initiallState, action: any): TInitiallState => {
     switch (action.type) {
         case ADD_POST:
             return {
@@ -35,26 +39,45 @@ const profileReducer = (state = initiallState, action) => {
         case SAVE_PHOTO_SUCCESS:
             return {
                 ...state,
-                profile: { ...state.profile, photos: action.photo }
+                profile: { ...state.profile, photos: action.photo } as TProfile
             }
         default:
             return state
     }
 }
 
-export const addPost = (text) => ({ type: ADD_POST, text });
-export const setProfile = (profile) => ({ type: SET_PROFILE, profile });
-export const setStatus = (status) => ({ type: SET_STATUS, status });
-export const savePhotoSuccess = (photo) => ({ type: SAVE_PHOTO_SUCCESS, photo });
+type TAddPost = {
+    type: typeof ADD_POST
+    text: string
+}
 
-export const getProfile = (userId) => {
+type TSetProfile = {
+    type: typeof SET_PROFILE
+    profile: TProfile
+}
+
+type TSetStatus = {
+    type: typeof SET_STATUS
+    status: string
+}
+
+type TSavePhoto = {
+    type: typeof SAVE_PHOTO_SUCCESS
+    photo: TPhoto
+}
+export const addPost = (text: string): TAddPost => ({ type: ADD_POST, text });
+export const setProfile = (profile: TProfile): TSetProfile => ({ type: SET_PROFILE, profile });
+export const setStatus = (status: string): TSetStatus => ({ type: SET_STATUS, status });
+export const savePhotoSuccess = (photo: TPhoto): TSavePhoto => ({ type: SAVE_PHOTO_SUCCESS, photo });
+
+export const getProfile = (userId: number | null): AppThunk => {
     return async (dispatch) => {
         let data = await profileAPI.getProfile(userId)
         dispatch(setProfile(data));
     }
 }
 
-export const getStatus = (userId) => {
+export const getStatus = (userId: number): AppThunk => {
     return async (dispatch) => {
         let data = await profileAPI.getStatus(userId)
         let status = JSON.parse(data);
@@ -62,7 +85,7 @@ export const getStatus = (userId) => {
     }
 }
 
-export const updateStatus = (status) => {
+export const updateStatus = (status: string): AppThunk => {
     return async (dispatch) => {
         let data = await profileAPI.updateStatus(status)
         if (data.resultCode === 0)
@@ -70,7 +93,7 @@ export const updateStatus = (status) => {
     }
 }
 
-export const savePhoto = photo => {
+export const savePhoto = (photo: TPhoto): AppThunk => {
     return async (dispatch) => {
         const response = await profileAPI.savePhoto(photo);
         if (response.resultCode === 0)
@@ -78,7 +101,7 @@ export const savePhoto = photo => {
     }
 }
 
-export const saveProfile = profileData => async (dispatch, getState) => {
+export const saveProfile = (profileData: TProfile): AppThunk => async (dispatch, getState) => {
     try {
         const userId = getState().auth.id;
         const response = await profileAPI.updateProfile(profileData);
