@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import style from './ProfileInfo.module.scss'
 
-const ProfileStatus = (props) => {
+type Props = {
+    status: string
+    updateStatus: (status: string) => void
+}
+
+const ProfileStatus = (props:Props) => {
     const [editMode, setEditMode] = useState(false);
 
     const [status, setStatus] = useState(props.status);
@@ -19,7 +24,7 @@ const ProfileStatus = (props) => {
         props.updateStatus(status);
     }
 
-    const onStatusChanged = (e) => {
+    const onStatusChanged = (e:ChangeEvent<HTMLInputElement>) => {
         setStatus(e.currentTarget.value)
     }
     return (

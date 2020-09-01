@@ -1,11 +1,11 @@
 const ADD_MESSAGE = 'reducer-dialogs/ADD_MESSAGE';
 
-type TDialogs = {
+export type TDialogs = {
     id: number
     name: string
 }
 
-type TMessages = {
+export type TMessages = {
     id: number
     text: string
 }
@@ -42,7 +42,7 @@ const dialogsReducer = (state = initiallState, action: dialogsActionsType): TIni
     }
 }
 
-type TAddMessage = {
+export type TAddMessage = {
     type: typeof ADD_MESSAGE
     text: string
 }

@@ -2,7 +2,12 @@ import React from 'react';
 import style from './Companion.module.scss';
 import {NavLink} from 'react-router-dom';
 
-const Companion = (props) => {
+interface IProps {
+    id: any
+    name: string
+}
+
+const Companion:React.FC<IProps> = (props) => {
 	return(
 		<div className={style.companion__body}>
 			<NavLink to={"/Dialogs/" + props.id} activeClassName={style.active}> 
