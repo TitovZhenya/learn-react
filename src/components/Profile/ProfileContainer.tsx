@@ -4,12 +4,28 @@ import { connect } from 'react-redux';
 import { getProfile, getStatus, updateStatus, savePhoto, saveProfile } from '../../Redux/reducer-profile';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { TProfile, TPhoto } from '../../types/types';
+import { RootState } from '../../Redux/redux-store';
 
-class ProfileContainer extends React.Component {
-    constructor(props) {
-        super(props)
-    }
+interface IMapStateProps {
+    match?: any
+    history?: any
+    userId: number | null
+    profile: TProfile | null
+    status: string
+}
 
+interface IMapDispatchProps {
+    getProfile: (userId: number) => void
+    getStatus: (userId: number) => void
+    updateStatus: (status: string) => void
+    savePhoto: (photo: Array<TPhoto>) => void
+    saveProfile: (profileData: TProfile) => void
+}
+
+type TProps = IMapStateProps & IMapDispatchProps
+
+class ProfileContainer extends React.Component<TProps> {
     refreshProfile() {
         let userId = this.props.match.params.userId;
         if (!userId) {
@@ -26,12 +42,10 @@ class ProfileContainer extends React.Component {
         this.refreshProfile();
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps: TProps) {
         if (this.props.match.params.userId != prevProps.match.params.userId) {
             this.refreshProfile();
         }
-
-
     }
 
     render() {
@@ -41,11 +55,10 @@ class ProfileContainer extends React.Component {
     }
 }
 
-const mapPropsToState = (state) => ({
+const mapPropsToState = (state:RootState):IMapStateProps => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     userId: state.auth.id,
-    isAuth: state.auth.isAuth
 });
 
 export default compose(connect(mapPropsToState, { getProfile, getStatus, updateStatus, savePhoto, saveProfile }), withRouter)(ProfileContainer)

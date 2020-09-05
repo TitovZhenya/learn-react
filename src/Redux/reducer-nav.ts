@@ -1,4 +1,4 @@
-type TFriends = {
+export interface IFriends {
     id: number
     name: string
 }
@@ -9,11 +9,11 @@ let initiallState = {
         { id: 2, name: 'Eric' },
         { id: 3, name: 'Kyle' },
         { id: 4, name: 'Bruce' }
-    ]  as Array<TFriends>
+    ] as Array<IFriends>
 };
 
 type TInitialState = typeof initiallState
 
-const navReducer = (state = initiallState, action:any):TInitialState => state
+const navReducer = (state = initiallState, action: any): TInitialState => state
 
 export default navReducer;

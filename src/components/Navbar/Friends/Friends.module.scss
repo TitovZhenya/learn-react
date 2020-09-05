@@ -1,12 +1,12 @@
-.friend{
-  display: flex;
-  margin: 15px 15px;
-  flex-direction: column;
-  & img{
-    width: 40px;
-    border-radius: 50%;
-  }
-  & span{
-    align-self: center;
-  }
+.friend {
+    display: flex;
+    margin: 15px 15px;
+    flex-direction: column;
+    & img {
+        width: 40px;
+        border-radius: 50%;
+    }
+    & span {
+        align-self: center;
+    }
 }

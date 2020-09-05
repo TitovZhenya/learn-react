@@ -1,4 +1,4 @@
-import { authAPI, securityAPI } from '../API/api'
+import { authAPI, securityAPI, ResultCode, ResulCodeCaptha } from '../API/api'
 import { stopSubmit } from 'redux-form'
 import { AppThunk } from './redux-store'
 
@@ -57,10 +57,9 @@ export const getCaptchaUrlSuccess = (captchaUrl: string): TGetCaptcha => ({
     payload: { captchaUrl }
 })
 
-
 export const getAuthUserData = (): AppThunk => async (dispatch) => {
     let data = await authAPI.me()
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCode.Success) {
         let { id, email, login } = data.data;
         dispatch(setUserData(id, email, login, true));
     }
@@ -69,10 +68,10 @@ export const getAuthUserData = (): AppThunk => async (dispatch) => {
 export const login = (email: string, password: number, rememberMe: boolean, captcha: string = ''): AppThunk => {
     return async (dispatch) => {
         let data = await authAPI.login(email, password, rememberMe, captcha);
-        if (data.resultCode === 0)
+        if (data.resultCode === ResultCode.Success)
             dispatch(getAuthUserData());
         else {
-            if (data.resultCode === 10)
+            if (data.resultCode === ResulCodeCaptha.CapthaIsRequired)
                 dispatch(getCaptchaUrl());
             let message = data.messages.length > 0 ? data.messages[0] : 'Incorect email or password';
             dispatch(stopSubmit('login', { _error: message }));
@@ -82,8 +81,8 @@ export const login = (email: string, password: number, rememberMe: boolean, capt
 
 export const logout = (): AppThunk => async (dispatch) => {
     const data = await authAPI.logout()
-
-    if (data.resultCode === 0)
+    
+    if (data.resultCode === ResultCode.Error)
         dispatch(setUserData(null, null, null, false));
 }
 

@@ -1,13 +1,40 @@
+import { TProfile, TPhoto } from "../types/types";
+
 let baseURL = 'https://social-network.samuraijs.com/api/1.0/';
 
+export enum ResultCode {
+    Success = 0,
+    Error = 1
+}
+
+interface IResponse {
+    data: {}
+    resultCode: ResultCode
+    messages: Array<string>
+}
+
+interface IItems {
+    name: string
+    id: number
+    photos: TPhoto
+    status: string
+    followed: boolean
+}
+
+interface IGetUsers {
+    items: Array<IItems>
+    totalCount: number
+    error: null
+}
+
 export const usersAPI = {
-    getUsers(page = 1, count = 10) {
+    getUsers(page: number = 1, count: number = 10): Promise<IGetUsers> {
         return fetch(`${baseURL}users?count=${count}&page=${page}`, {
             method: 'GET',
             credentials: 'include'
         }).then(respose => respose.json())
     },
-    unFollow(userId) {
+    unFollow(userId: number): Promise<IResponse> {
         return fetch(`${baseURL}follow/${userId}`, {
             method: 'DELETE',
             credentials: 'include',
@@ -16,7 +43,7 @@ export const usersAPI = {
             }
         }).then(respose => respose.json())
     },
-    follow(userId) {
+    follow(userId: number): Promise<IResponse> {
         return fetch(`${baseURL}follow/${userId}`, {
             method: 'POST',
             credentials: 'include',
@@ -27,20 +54,26 @@ export const usersAPI = {
     }
 }
 
+interface ISavePhoto{
+    data: TPhoto
+    resultCode: ResultCode
+    messages: Array<string>
+}
+
 export const profileAPI = {
-    getProfile(userId) {
+    getProfile(userId: number | null): Promise<TProfile> {
         return fetch(`${baseURL}profile/${userId}`, {
             method: 'GET',
             credentials: 'include'
         }).then(response => response.json())
     },
-    getStatus(userId) {
+    getStatus(userId: number) {
         return fetch(`${baseURL}profile/status/${userId}`, {
             method: 'GET',
             credentials: 'include'
         }).then(response => response.text());
     },
-    updateStatus(status) {
+    updateStatus(status: string): Promise<IResponse> {
         let sp = new URLSearchParams();
         sp.append('status', status);
         return fetch(`${baseURL}profile/status`, {
@@ -52,7 +85,7 @@ export const profileAPI = {
             }
         }).then(response => response.json());
     },
-    savePhoto(photo) {
+    savePhoto(photo: any): Promise<ISavePhoto> {
         let fd = new FormData();
         fd.append('image', photo);
         return fetch(`${baseURL}profile/photo`, {
@@ -64,7 +97,7 @@ export const profileAPI = {
             }
         }).then(response => response.json());
     },
-    updateProfile(profileData) {
+    updateProfile(profileData: TProfile) {
         return fetch(`${baseURL}profile`, {
             method: 'PUT',
             credentials: 'include',
@@ -77,14 +110,42 @@ export const profileAPI = {
     }
 }
 
+export enum ResulCodeCaptha {
+    CapthaIsRequired = 10
+}
+
+interface IMeResponse {
+    data: {
+        id: number
+        email: string
+        login: string
+    }
+    resultCode: ResultCode
+    messages: Array<string>
+}
+
+interface ILoginResponse {
+    data: {
+        id: number
+    }
+    resultCode: ResultCode | ResulCodeCaptha
+    messages: Array<string>
+}
+
+interface ILogoutResponse {
+    data: {}
+    resultCode: ResultCode | ResulCodeCaptha
+    messages: Array<string>
+}
+
 export const authAPI = {
-    me() {
+    me(): Promise<IMeResponse> {
         return fetch(`${baseURL}auth/me`, {
             method: 'GET',
             credentials: 'include'
         }).then(response => response.json());
     },
-    login(email, password, rememberMe = false, captcha = '') {
+    login(email: string, password: any, rememberMe: any, captcha: string = ''): Promise<ILoginResponse> {
         let sp = new URLSearchParams();
         sp.append('email', email);
         sp.append('password', password);
@@ -100,7 +161,7 @@ export const authAPI = {
             }
         }).then(response => response.json());
     },
-    logout() {
+    logout(): Promise<ILogoutResponse> {
         return fetch(`${baseURL}/auth/login`, {
             method: 'DELETE',
             credentials: 'include',
@@ -111,8 +172,12 @@ export const authAPI = {
     }
 }
 
+interface ICapthaResponse {
+    url: string
+}
+
 export const securityAPI = {
-    getCaptcha() {
+    getCaptcha(): Promise<ICapthaResponse> {
         return fetch(`${baseURL}security/get-captcha-url`, {
             method: 'GET',
             credentials: 'include'

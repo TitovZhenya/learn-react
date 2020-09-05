@@ -2,8 +2,25 @@ import React from 'react';
 import style from './Person.module.scss';
 import profileImg from './../../../img/images.png';
 import { NavLink } from 'react-router-dom';
+import { TUser, TPhoto } from '../../../types/types';
 
-const Person = (props) => {
+interface IMapStateProp{
+    photo: string | null
+    followed: boolean
+    id: number
+    userName: string
+    status: string
+}
+
+interface IMapDispatchProp{
+    followingUser: Array<number>
+    unFollow: (userId:number) => void
+    follow: (userId:number) => void
+}
+
+type TProp = IMapStateProp & IMapDispatchProp
+
+const Person:React.FC<TProp> = (props) => {
     return (
         <div className={style.listItem}>
             <div className={style.listItem__photo}>

@@ -1,13 +1,18 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
+import { RootState } from '../Redux/redux-store';
 
-let mapStateToProps = (state) => ({
+interface IMapStateProp{
+    isAuth: boolean | null
+}
+
+let mapStateToProps = (state:RootState):IMapStateProp => ({
 	isAuth : state.auth.isAuth
 });
 
-export const withAuthRedirect = (Component) => {
-	class RedirectComponent extends React.Component{
+export const withAuthRedirect = (Component:any) => {
+	class RedirectComponent extends React.Component<IMapStateProp>{
 		render(){
 			if( !this.props.isAuth )
 				return <Redirect to='/login' />

@@ -2,6 +2,7 @@ import { usersAPI } from '../API/api';
 import { updateObjectInArray } from '../utils/object-helpers';
 import { AppThunk } from './redux-store'
 import { TPhoto, TUser } from '../types/types';
+import { Dispatch } from 'react';
 
 const FOLLOW = 'reducer-users/FOLLOW';
 const UNFOLLOW = 'reducer-users/UNFOLLOW';
@@ -10,8 +11,6 @@ const SET_CURRENT_PAGE = 'reducer-users/SET_CURRENT_PAGE';
 const SET_USERS_TOTAL_COUNT = 'reducer-users/SET_USERS_TOTAL_COUNT';
 const TOGGLE_IS_FETCHING = 'reducer-users/TOGGLE_IS_FETCHING';
 const TOGGLE_IS_FOLLOWING = 'reducer-users/TOGGLE_IS_FOLLOWING';
-
-
 
 let initiallState = {
     users: [] as Array<TUser>,
@@ -24,7 +23,9 @@ let initiallState = {
 
 type TInitialState = typeof initiallState
 
-const usersReducer = (state = initiallState, action:any):TInitialState => {
+type TAction = TUserFollow | TUserUnFollow | TSetUsers | TSetPage | TSetUsersTotalCount | TToggleIsFetching | TToggleIsFollowing
+
+const usersReducer = (state = initiallState, action:TAction):TInitialState => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -121,7 +122,7 @@ export const getUsers = (currentPage:number, pageSize:number):AppThunk => {
     }
 }
 
-const followUnfollowFlow = async (dispatch:any, id:number, apiMethod:any, actionCreator:any) => {
+const followUnfollowFlow = async (dispatch:Dispatch<TAction>, id:number, apiMethod:any, actionCreator:any) => {
     dispatch(toggleIsFollowing(true, id));
     let data = await apiMethod(id)
     if (data.resultCode === 0)

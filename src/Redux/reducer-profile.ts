@@ -19,7 +19,9 @@ let initiallState = {
 
 type TInitiallState = typeof initiallState
 
-const profileReducer = (state = initiallState, action: any): TInitiallState => {
+type TAction = TAddPost | TSetProfile | TSetStatus | TSavePhoto
+
+const profileReducer = (state = initiallState, action: TAction): TInitiallState => {
     switch (action.type) {
         case ADD_POST:
             return {
@@ -97,7 +99,7 @@ export const savePhoto = (photo: TPhoto): AppThunk => {
     return async (dispatch) => {
         const response = await profileAPI.savePhoto(photo);
         if (response.resultCode === 0)
-            dispatch(savePhotoSuccess(response.data.photos))
+            dispatch(savePhotoSuccess(response.data))
     }
 }
 
